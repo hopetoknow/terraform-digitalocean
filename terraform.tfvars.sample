@@ -1,1 +1,5 @@
 do_token=
+droplet_count=
+droplet_image=
+droplet_region=
+droplet_size=

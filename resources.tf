@@ -1,6 +1,7 @@
 resource "digitalocean_droplet" "web" {
-  image  = "ubuntu-18-04-x64"
-  name   = "web-1"
-  region = "fra1"
-  size   = "s-1vcpu-1gb"
+  count = var.droplet_count
+  image  = var.droplet_image
+  name   = "web-${count.index + 1}"
+  region = var.droplet_region
+  size   = var.droplet_size
 }
