@@ -18,12 +18,18 @@ variable "droplet_image" {
 
 variable "droplet_region" {
   type = string 
-  description = "The region where a droplet will be created"
+  description = "The region where the droplet will be created"
   default = "fra1"
 }
 
 variable "droplet_size" {
   type = string 
-  description = "The unique slug that indentifies the type of a droplet"
+  description = "The unique slug that indentifies the type of the droplet"
   default = "s-1vcpu-1gb"
+}
+
+variable "loadbalancer_size" {
+  type = string 
+  description = "The size of the load balancer"
+  default = "lb-small"
 }
