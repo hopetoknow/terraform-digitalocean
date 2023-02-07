@@ -1,30 +1,17 @@
-resource "digitalocean_droplet" "web" {
-  count = var.droplet_count
-  image  = var.droplet_image
-  name   = "web-${count.index + 1}"
-  region = var.droplet_region
-  size   = var.droplet_size
+resource "digitalocean_ssh_key" "my_ssh_key" {
+  name       = "hopetoknow"
+  public_key = file(var.digitalocean_ssh_key_file_path)
 }
 
-resource "digitalocean_loadbalancer" "web-loadbalancer" {
-  name = "web-loadbalancer-1"
-  region = var.droplet_region
-  size = var.loadbalancer_size
+resource "digitalocean_tag" "email" {
+  name = var.email_tag
+}
 
-  forwarding_rule {
-    entry_port = 443
-    entry_protocol = "https"
-
-    target_port = 443
-    target_protocol = "https"
-    
-    tls_passthrough = true
-  }
-
-  healthcheck {
-    port     = 22
-    protocol = "tcp"
-  }
-
-  droplet_ids = digitalocean_droplet.web.*.id
+resource "digitalocean_droplet" "web" {
+  image  = "ubuntu-22-04-x64"
+  name   = "web-1"
+  region = element(data.digitalocean_regions.available.regions, 0).slug
+  size   = element(data.digitalocean_sizes.main.sizes, 0).slug
+  ssh_keys = [data.external.key_data.result.id, digitalocean_ssh_key.my_ssh_key.id]
+  tags   = ["devops", var.email_tag]
 }

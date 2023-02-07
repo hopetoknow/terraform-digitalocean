@@ -1,5 +1,4 @@
-do_token=
-droplet_count=
-droplet_image=
-droplet_region=
-droplet_size=
+digitalocean_access_token=
+digitalocean_ssh_key_file_path=
+digitalocean_ssh_some_pubkey_body=
+email_tag=
